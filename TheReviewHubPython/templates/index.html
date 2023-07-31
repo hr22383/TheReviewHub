@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>The Review Hub - NLP Techniques</title>
+    <style>
+        /* Header Styling */
+        .header {
+            background-color: #4287f5;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* File Upload Styling */
+        .file-upload {
+            margin-top: 20px;
+        }
+
+        .file-upload label {
+            display: inline-block;
+            background-color: #2f5d9b;
+            color: #fff;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .file-upload input[type="file"] {
+            display: none;
+        }
+
+        .file-upload input[type="submit"] {
+            display: inline-block;
+            background-color: #4287f5;
+            color: #fff;
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+        }
+
+        /* Table Styling */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr.border-bottom td {
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>The Review Hub - NLP Techniques</h1>
+    </div>
+
+    <div class="file-upload">
+        <form action="/analyze" method="POST" enctype="multipart/form-data">
+            <label for="file">Choose a CSV file:</label>
+            <input type="file" name="file" id="file" accept=".csv" required>
+            <input type="submit" value="Analyze">
+        </form>
+    </div>
+
+    {% if results %}
+  
+
+    <h2>Sentiment Analysis Results:</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Review</th>
+                <th>Sentiment</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in results.sentiments %}
+            <tr class="border-bottom">
+                <td>{{ result['Review'] }}</td>
+                <td>{{ result['Sentiment'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <h2>Named Entity Recognition Results:</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Review</th>
+                <th>Named Entity</th>
+                <th>Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in results.entities %}
+            <tr class="border-bottom">
+                <td>{{ result['Review'] }}</td>
+                <td>{{ result['Named Entity'] }}</td>
+                <td>{{ result['Category'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Topic Modeling Results</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Review</th>
+            <th>Topic</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for result in results.topics %}
+        <tr class="border-bottom">
+            <td>{{ result['Review'] }}</td>
+            <td>{{ result['Topic'] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+    {% endif %}
+</body> 
+</html> 
